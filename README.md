@@ -275,8 +275,7 @@ api/generate.py    ──────────►     Serverless Function
 
 | Key | Value |
 |-----|-------|
-| `AI_PROVIDER` | `openrouter` |
-| `OPENROUTER_API_KEY` | `apni-api-key-yahan-daal` |
+| `NARA_ROUTER_API_KEY` | `apni-nara-router-key-yahan-daal` |
 | `NARA_ROUTER_URL` | `https://router.bynara.id/v1/chat/completions` |
 
 > ⚠️ **Bina environment variables ke backend kaam nahi karega!** API key yahin set hoti hai — `.env` file deploy mein nahi jaati.
@@ -358,8 +357,7 @@ Blog preview frontend pe dikh jata hai
 
 | Key | Value |
 |-----|-------|
-| `AI_PROVIDER` | `openrouter` |
-| `OPENROUTER_API_KEY` | `apni-api-key-yahan-daal` |
+| `NARA_ROUTER_API_KEY` | `apni-nara-router-key-yahan-daal` |
 | `NARA_ROUTER_URL` | `https://router.bynara.id/v1/chat/completions` |
 
 > ⚠️ **Environment variables bina backend kaam nahi karega!**

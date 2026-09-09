@@ -9,8 +9,7 @@ from http.server import BaseHTTPRequestHandler
 
 # ─── AI Service ───
 
-PROVIDER = os.getenv("AI_PROVIDER", "openrouter")
-OPENROUTER_KEY = os.getenv("OPENROUTER_API_KEY", "")
+NARA_ROUTER_KEY = os.getenv("NARA_ROUTER_API_KEY", "")
 NARA_ROUTER_URL = os.getenv("NARA_ROUTER_URL", "https://router.bynara.id/v1/chat/completions")
 
 SYSTEM_PROMPT = """You are ContentMagic — an expert blog writer.
@@ -39,7 +38,7 @@ async def generate_blog(text, style="professional", language="english"):
         resp = await client.post(
             NARA_ROUTER_URL,
             headers={
-                "Authorization": f"Bearer {OPENROUTER_KEY}",
+                "Authorization": f"Bearer {NARA_ROUTER_KEY}",
                 "Content-Type": "application/json",
             },
             json={

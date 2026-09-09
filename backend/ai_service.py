@@ -1,4 +1,4 @@
-"""AI Service — OpenRouter & Gemini integration."""
+"""AI Service — Nara Router integration."""
 
 import os
 import httpx
@@ -6,9 +6,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-PROVIDER = os.getenv("AI_PROVIDER", "openrouter")
-OPENROUTER_KEY = os.getenv("OPENROUTER_API_KEY", "")
-GEMINI_KEY = os.getenv("GEMINI_API_KEY", "")
+NARA_ROUTER_KEY = os.getenv("NARA_ROUTER_API_KEY", "")
 NARA_ROUTER_URL = os.getenv("NARA_ROUTER_URL", "https://router.bynara.id/v1/chat/completions")
 
 
@@ -36,32 +34,22 @@ async def generate_blog(
     style: str = "professional",
     language: str = "english",
 ) -> dict:
-    """Convert raw text into a structured blog post."""
+    """Convert raw text into a structured blog post via Nara Router."""
 
     system = SYSTEM_PROMPT.format(style=style, language=language)
 
-    if PROVIDER == "openrouter":
-        return await _call_openrouter(system, text)
-    elif PROVIDER == "gemini":
-        return await _call_gemini(system, text)
-    else:
-        raise ValueError(f"Unknown provider: {PROVIDER}")
-
-
-async def _call_openrouter(system: str, user_text: str) -> dict:
-    """Call Nara Router API (OpenRouter compatible)."""
     async with httpx.AsyncClient(timeout=60) as client:
         resp = await client.post(
             NARA_ROUTER_URL,
             headers={
-                "Authorization": f"Bearer {OPENROUTER_KEY}",
+                "Authorization": f"Bearer {NARA_ROUTER_KEY}",
                 "Content-Type": "application/json",
             },
             json={
                 "model": "google/gemini-2.0-flash-001",
                 "messages": [
                     {"role": "system", "content": system},
-                    {"role": "user", "content": user_text},
+                    {"role": "user", "content": text},
                 ],
                 "temperature": 0.7,
                 "max_tokens": 4000,
@@ -70,32 +58,4 @@ async def _call_openrouter(system: str, user_text: str) -> dict:
         resp.raise_for_status()
         data = resp.json()
         content = data["choices"][0]["message"]["content"]
-        return {"blog_html": content, "provider": "openrouter"}
-
-
-async def _call_gemini(system: str, user_text: str) -> dict:
-    """Call Google Gemini API."""
-    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_KEY}"
-    prompt = f"{system}\n\n---\n\nConvert this text into a blog:\n\n{user_text}"
-
-    async with httpx.AsyncClient(timeout=60) as client:
-        resp = await client.post(
-            url,
-            headers={"Content-Type": "application/json"},
-            json={
-                "contents": [{"parts": [{"text": prompt}]}],
-                "generationConfig": {
-                    "temperature": 0.7,
-                    "maxOutputTokens": 4000,
-                },
-            },
-        )
-        resp.raise_for_status()
-        data = resp.json()
-        content = data["candidates"][0]["content"]["parts"][0]["text"]
-        # Clean up markdown code fences if present
-        if content.startswith("```"):
-            content = content.split("\n", 1)[1]
-            if content.endswith("```"):
-                content = content[:-3]
-        return {"blog_html": content.strip(), "provider": "gemini"}
+        return {"blog_html": content, "provider": "nara-router"}

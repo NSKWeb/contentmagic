@@ -67,7 +67,7 @@ function suggestImage(html) {
 async function callAI(text, style, language) {
   const system = SYSTEM_PROMPT.replace("{style}", style).replace("{language}", language);
   const url = process.env.NARA_ROUTER_URL || "https://router.bynara.id/v1/chat/completions";
-  const apiKey = process.env.OPENROUTER_API_KEY || "";
+  const apiKey = process.env.NARA_ROUTER_API_KEY || "";
 
   const body = JSON.stringify({
     model: "google/gemini-2.0-flash-001",
