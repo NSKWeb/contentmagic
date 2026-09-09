@@ -19,12 +19,12 @@ unformed text and weaves it into something worth reading.
 
 ---
 
-![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=flat-square&logo=fastapi&logoColor=white)
-![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)
-![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)
-![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)
-![License](https://img.shields.io/badge/License-MIT-c44b2b?style=flat-square)
+[![Python](https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
+[![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=flat-square&logo=css3&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/CSS)
+[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=flat-square&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![License: MIT](https://img.shields.io/badge/License-MIT-c44b2b?style=flat-square)](https://opensource.org/licenses/MIT)
 
 <br>
 
@@ -123,11 +123,11 @@ Open `http://localhost:3000` — paste your text — choose a voice — transfor
 
 | Layer | Choice | Reason |
 |:-----:|:------:|:-------|
-| **Frontend** | Vanilla HTML · CSS · JS | No frameworks. No bloat. Just speed. |
-| **Backend** | Python · FastAPI | Async. Fast. Gets out of the way. |
-| **AI** | Nara Router · Gemini | The brain. The wordsmith. |
+| **Frontend** | [Vanilla HTML](https://developer.mozilla.org/en-US/docs/Web/HTML) · [CSS](https://developer.mozilla.org/en-US/docs/Web/CSS) · [JS](https://developer.mozilla.org/en-US/docs/Web/JavaScript) | No frameworks. No bloat. Just speed. |
+| **Backend** | [Python](https://www.python.org/) · [FastAPI](https://fastapi.tiangolo.com/) | Async. Fast. Gets out of the way. |
+| **AI** | [Nara Router](https://router.bynara.id/) · [Gemini](https://ai.google.dev/) | The brain. The wordsmith. |
 | **Design** | Editorial · Neo-Brutalist | Warm ink on cream parchment. |
-| **Hosting** | Vercel · Netlify | Free. Fast. Everywhere. |
+| **Hosting** | [Vercel](https://vercel.com/) · [Netlify](https://netlify.com/) | Free. Fast. Everywhere. |
 
 ---
 
@@ -172,6 +172,157 @@ contentmagic/
 | 🟫 | Vellum | `#faf6ef` | Surface — cards, inputs |
 
 </div>
+
+---
+
+## 🚀 Deploy Guide
+
+ContentMagic ko kahin bhi deploy kar sakte ho — free ya paid. Neeche har platform ka step-by-step guide hai.
+
+---
+
+### ▲ Deploy on Vercel (Frontend Only — Recommended)
+
+Vercel static frontend ke liye best hai. Free tier generous hai.
+
+```bash
+# 1. Vercel CLI install karo
+npm i -g vercel
+
+# 2. Frontend folder mein jao
+cd frontend
+
+# 3. Deploy karo
+vercel
+
+# 4. Follow the prompts:
+#    - Set up and deploy? → Y
+#    - Which scope? → Apna account
+#    - Link to existing project? → N
+#    - Project name? → contentmagic
+#    - Directory? → ./
+```
+
+**Ya Vercel Dashboard se:**
+1. [vercel.com](https://vercel.com) pe ja → Login
+2. **"Add New Project"** → **"Import Git Repository"**
+3. `NSKWeb/contentmagic` select karo
+4. **Root Directory:** `frontend`
+5. **Deploy** dabao ✅
+
+> ⚠️ Frontend deploy hone ke baad `app.js` mein `API_URL` apne backend URL se change karo.
+
+---
+
+### ◆ Deploy on Netlify (Frontend Only)
+
+Netlify bhi free hai aur bahut simple.
+
+```bash
+# 1. Netlify CLI install
+npm i -g netlify-cli
+
+# 2. Frontend folder mein jao
+cd frontend
+
+# 3. Deploy karo
+netlify deploy --prod --dir .
+```
+
+**Ya Netlify Dashboard se:**
+1. [netlify.com](https://netlify.com) pe ja → Login
+2. **"Add new site"** → **"Import an existing project"**
+3. GitHub select karo → `NSKWeb/contentmagic`
+4. **Base directory:** `frontend`
+5. **Publish directory:** `.`
+6. **Deploy site** dabao ✅
+
+---
+
+### 🖥 Deploy on VPS (Full Stack — Backend + Frontend)
+
+Agar tumhare paas VPS hai (DigitalOcean, Linode, AWS EC2, etc.) toh dono ek saath chal sakte hain.
+
+```bash
+# 1. VPS pe SSH karo
+ssh root@your-vps-ip
+
+# 2. Clone karo
+git clone https://github.com/NSKWeb/contentmagic.git
+cd contentmagic
+
+# 3. Python setup
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+
+# 4. .env setup
+cp ../.env.example .env
+nano .env  # Apni API key daalo
+
+# 5. Backend chalao (background mein)
+nohup python main.py &
+
+# 6. Frontend serve karo (nginx se ya python se)
+cd ../frontend
+python3 -m http.server 3000
+```
+
+**Production ke liye — Nginx setup:**
+
+```nginx
+# /etc/nginx/sites-available/contentmagic
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    # Frontend
+    location / {
+        root /path/to/contentmagic/frontend;
+        index index.html;
+    }
+
+    # Backend API proxy
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+```
+
+```bash
+# Enable site
+sudo ln -s /etc/nginx/sites-available/contentmagic /etc/nginx/sites-enabled/
+sudo nginx -t
+sudo systemctl restart nginx
+```
+
+---
+
+### 🐳 Deploy with Docker (Any Platform)
+
+```bash
+# Dockerfile already works for both frontend + backend
+docker build -t contentmagic .
+docker run -p 8000:8000 -p 3000:3000 contentmagic
+```
+
+---
+
+### 📊 Platform Comparison
+
+| Platform | Cost | Backend | Frontend | Difficulty |
+|:---------|:----:|:-------:|:--------:|:----------:|
+| **Vercel** | Free | ❌ | ✅ | ⭐ Easy |
+| **Netlify** | Free | ❌ | ✅ | ⭐ Easy |
+| **VPS** | $5/mo+ | ✅ | ✅ | ⭐⭐⭐ Medium |
+| **Railway** | Free tier | ✅ | ✅ | ⭐⭐ Easy-Med |
+| **Render** | Free tier | ✅ | ✅ | ⭐⭐ Easy-Med |
+| **Docker** | Anywhere | ✅ | ✅ | ⭐⭐⭐ Medium |
+
+> 💡 **Best combo:** Frontend → Vercel/Netlify (free) + Backend → Railway/Render (free tier)
 
 ---
 
