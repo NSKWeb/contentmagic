@@ -468,16 +468,43 @@ python3 -m http.server 3000
 # 🌐 http://localhost:3000
 ```
 
+### 🤖 Available Providers (6 Options!)
+
+| Provider | Key | Free? | Best For |
+|----------|-----|-------|----------|
+| `nara` | `NARA_ROUTER_API_KEY` | ✅ | Vercel/Netlify (default) |
+| `gemini` | `GEMINI_API_KEY` | ✅ | VPS/Local |
+| `openrouter` | `OPENROUTER_API_KEY` | ✅ free models | Sab kuch |
+| `groq` | `GROQ_API_KEY` | ✅ free tier | Fastest inference ⚡ |
+| `together` | `TOGETHER_API_KEY` | ✅ free tier | Llama models |
+| `huggingface` | `HUGGINGFACE_API_KEY` | ✅ free | Open source models |
+
 ### Kaunsa Provider Kab Use Karein?
 
-| Deploy Kar Rahe Ho? | Provider | Key |
-|---------------------|----------|-----|
-| ▲ **Vercel** | `nara` (default) | `NARA_ROUTER_API_KEY` |
-| ◆ **Netlify** | `nara` (default) | `NARA_ROUTER_API_KEY` |
-| 🖥 **VPS** | `gemini` | `GEMINI_API_KEY` |
-| 💻 **Local** | `gemini` | `GEMINI_API_KEY` |
+| Deploy Kar Rahe Ho? | Recommended Provider |
+|---------------------|---------------------|
+| ▲ **Vercel** | `nara` (default) |
+| ◆ **Netlify** | `nara` (default) |
+| 🖥 **VPS** | `nara` ya `gemini` ya `groq` |
+| 💻 **Local** | `nara` ya `gemini` ya `groq` |
 
-> **Matlab:** Serverless (Vercel/Netlify) → Nara Router. Apna server (VPS/Local) → Gemini.
+> **Koi bhi provider kahin bhi use kar sakte ho — VPS pe bhi Nara Router chalega!**
+
+### Provider Kaise Switch Karein?
+
+`.env` file mein bas `AI_PROVIDER` change karo:
+
+```bash
+# Example: Groq use karna hai (fastest)
+AI_PROVIDER=groq
+GROQ_API_KEY=apni-g…daal
+```
+
+```bash
+# Example: Nara Router use karna hai
+AI_PROVIDER=nara
+NARA_ROUTER_API_KEY=apni-n…daal
+```
 
 ---
 
