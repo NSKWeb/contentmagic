@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContentMagic ✨ — Blog Converter</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="logo">✨ ContentMagic</h1>
+            <p class="tagline">Paste anything → Get a proper blog post</p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="input-section">
+            <div class="textarea-wrapper">
+                <textarea
+                    id="inputText"
+                    placeholder="Paste your raw text, notes, article, or anything here..."
+                    rows="8"
+                ></textarea>
+                <div class="char-count"><span id="charCount">0</span> / 10,000</div>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>🎨 Style</label>
+                    <select id="styleSelect">
+                        <option value="professional">Professional</option>
+                        <option value="casual">Casual</option>
+                        <option value="seo">SEO-Optimized</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>🌐 Language</label>
+                    <select id="langSelect">
+                        <option value="english">English</option>
+                        <option value="hindi">Hindi</option>
+                    </select>
+                </div>
+                <button id="generateBtn" class="btn-primary" onclick="generateBlog()">
+                    ✨ Generate Blog
+                </button>
+            </div>
+        </section>
+
+        <!-- Loading -->
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>ContentMagic jaadu kar raha hai... ✨</p>
+        </div>
+
+        <!-- Output Section -->
+        <section id="outputSection" class="output-section hidden">
+            <!-- Stats Bar -->
+            <div class="stats-bar">
+                <span id="statWords">📊 0 words</span>
+                <span id="statTime">⏱ 0 min read</span>
+                <span id="statProvider">🤖 AI</span>
+            </div>
+
+            <!-- SEO Meta -->
+            <div class="seo-box">
+                <h3>🔍 SEO Details</h3>
+                <div class="seo-field">
+                    <label>Title:</label>
+                    <span id="seoTitle">—</span>
+                </div>
+                <div class="seo-field">
+                    <label>Meta Description:</label>
+                    <span id="seoDesc">—</span>
+                </div>
+                <div class="seo-field">
+                    <label>Keywords:</label>
+                    <span id="seoKeywords">—</span>
+                </div>
+                <div class="seo-field">
+                    <label>🖼 Image:</label>
+                    <span id="seoImage">—</span>
+                </div>
+            </div>
+
+            <!-- Blog Preview -->
+            <div class="preview-header">
+                <h2>📄 Blog Preview</h2>
+                <div class="preview-actions">
+                    <button class="btn-secondary" onclick="copyHTML()">📋 Copy HTML</button>
+                    <button class="btn-secondary" onclick="downloadHTML()">⬇ Download HTML</button>
+                    <button class="btn-secondary" onclick="downloadMarkdown()">⬇ Download MD</button>
+                </div>
+            </div>
+            <div id="blogPreview" class="blog-preview"></div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Made with ✨ by ContentMagic</p>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
