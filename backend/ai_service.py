@@ -9,6 +9,7 @@ load_dotenv()
 PROVIDER = os.getenv("AI_PROVIDER", "openrouter")
 OPENROUTER_KEY = os.getenv("OPENROUTER_API_KEY", "")
 GEMINI_KEY = os.getenv("GEMINI_API_KEY", "")
+NARA_ROUTER_URL = os.getenv("NARA_ROUTER_URL", "https://router.bynara.id/v1/chat/completions")
 
 
 SYSTEM_PROMPT = """You are ContentMagic — an expert blog writer.
@@ -48,10 +49,10 @@ async def generate_blog(
 
 
 async def _call_openrouter(system: str, user_text: str) -> dict:
-    """Call OpenRouter API."""
+    """Call Nara Router API (OpenRouter compatible)."""
     async with httpx.AsyncClient(timeout=60) as client:
         resp = await client.post(
-            "https://openrouter.ai/api/v1/chat/completions",
+            NARA_ROUTER_URL,
             headers={
                 "Authorization": f"Bearer {OPENROUTER_KEY}",
                 "Content-Type": "application/json",
