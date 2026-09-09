@@ -1,54 +1,3 @@
-<div align="center">
-
-<br>
-
-◆ &nbsp; THE &nbsp; MIT &nbsp; LICENSE &nbsp; ◆
-
-<br><br>
-
-# ContentMagic
-
-### A License of Freedom & Trust
-
-<br>
-
-_Copyright © 2026 NSKWeb_
-
-<br>
-
----
-
-</div>
-
-## Preamble
-
-This software — **ContentMagic** — was built to help writers, bloggers, and makers of all kinds transform their words into something beautiful. It is offered freely, in the spirit of generosity that has always powered the open-source world.
-
-The following license grants you permission to use, modify, and share this work. It is written in plain language below, followed by the formal legal text.
-
----
-
-## In Plain Words
-
-<div align="center">
-
-| You May | You Need Not |
-|:--------|:-------------|
-| ✅ Use it for anything — personal or commercial | Disclose your source code |
-| ✅ Modify it to suit your needs | Provide any warranty |
-| ✅ Share it with others | Give credit (though it's kind to do so) |
-| ✅ Sell products built with it | Include the license (though you should) |
-| ✅ Sublicense under your own terms | Ask permission first |
-
-</div>
-
-> **In short:** Do whatever you wish with this code. Just don't hold us liable if something goes wrong, and don't claim you wrote it from scratch.
-
----
-
-## The Full License
-
-```
 MIT License
 
 Copyright (c) 2026 NSKWeb — ContentMagic
@@ -70,18 +19,3 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
-```
-
----
-
-<div align="center">
-
-◆
-
-_Freely given. Freely received._
-
-<br>
-
-**ContentMagic** · [github.com/NSKWeb/contentmagic](https://github.com/NSKWeb/contentmagic)
-
-</div>
