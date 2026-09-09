@@ -74,14 +74,23 @@
 
 </details>
 
-<details>
+<details open>
 <summary>📜 <b>MIT License</b> — Free to Use</summary>
 <br>
 
-- ✅ Commercial use allowed
-- ✅ Modification allowed
-- ✅ Distribution allowed
-- ✅ Private use allowed
+**MIT License** duniya ki sabse **open aur permissive** license hai. Iska matlab:
+
+| ✅ Kar Sakte Ho | ❌ Karna Zaroori Nahi |
+|:----------------|:---------------------|
+| Commercial use (paisa kamao 💰) | Source code disclose karna |
+| Modify (apne hisaab se badlo) | Warranty dena |
+| Distribute (doosron ko do) | Credit dena (par accha lagta hai 😄) |
+| Private use (personal project) | License text rakhna (par rakhna chahiye) |
+| Sublicense (apni license do) | |
+
+**Simple mein:** Is code se jo chahein karo — bas pakad ke mat bolo ki tumne banaya. 🙏
+
+**Full license:** [LICENSE](./LICENSE) file dekho
 
 </details>
 
