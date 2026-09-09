@@ -1,4 +1,4 @@
-"""AI Service — Nara Router integration."""
+"""AI Service — Nara Router + Gemini integration."""
 
 import os
 import httpx
@@ -6,8 +6,17 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-NARA_ROUTER_KEY = os.getenv("NARA_ROUTER_API_KEY", "")
+# ─── Provider select karo ───
+# Vercel/Netlify → "nara" (default)
+# VPS/Local      → "gemini"
+PROVIDER = os.getenv("AI_PROVIDER", "nara")
+
+# ─── Nara Router (Vercel/Netlify ke liye) ───
+NARA_ROUTER_KEY = ***"NARA_ROUTER_API_KEY", "")
 NARA_ROUTER_URL = os.getenv("NARA_ROUTER_URL", "https://router.bynara.id/v1/chat/completions")
+
+# ─── Gemini (VPS/Local ke liye) ───
+GEMINI_KEY = ***"GEMINI_API_KEY", "")
 
 
 SYSTEM_PROMPT = """You are ContentMagic — an expert blog writer.
@@ -34,10 +43,20 @@ async def generate_blog(
     style: str = "professional",
     language: str = "english",
 ) -> dict:
-    """Convert raw text into a structured blog post via Nara Router."""
+    """Convert raw text into a structured blog post."""
 
     system = SYSTEM_PROMPT.format(style=style, language=language)
 
+    if PROVIDER == "nara":
+        return await _call_nara_router(system, text)
+    elif PROVIDER == "gemini":
+        return await _call_gemini(system, text)
+    else:
+        raise ValueError(f"Unknown provider: {PROVIDER}. Use 'nara' or 'gemini'.")
+
+
+async def _call_nara_router(system: str, user_text: str) -> dict:
+    """Call Nara Router API (Vercel/Netlify ke liye)."""
     async with httpx.AsyncClient(timeout=60) as client:
         resp = await client.post(
             NARA_ROUTER_URL,
@@ -49,7 +68,7 @@ async def generate_blog(
                 "model": "google/gemini-2.0-flash-001",
                 "messages": [
                     {"role": "system", "content": system},
-                    {"role": "user", "content": text},
+                    {"role": "user", "content": user_text},
                 ],
                 "temperature": 0.7,
                 "max_tokens": 4000,
@@ -59,3 +78,31 @@ async def generate_blog(
         data = resp.json()
         content = data["choices"][0]["message"]["content"]
         return {"blog_html": content, "provider": "nara-router"}
+
+
+async def _call_gemini(system: str, user_text: str) -> dict:
+    """Call Google Gemini API (VPS/Local ke liye)."""
+    url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key={GEMINI_KEY}"
+    prompt = f"{system}\n\n---\n\nConvert this text into a blog:\n\n{user_text}"
+
+    async with httpx.AsyncClient(timeout=60) as client:
+        resp = await client.post(
+            url,
+            headers={"Content-Type": "application/json"},
+            json={
+                "contents": [{"parts": [{"text": prompt}]}],
+                "generationConfig": {
+                    "temperature": 0.7,
+                    "maxOutputTokens": 4000,
+                },
+            },
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        content = data["candidates"][0]["content"]["parts"][0]["text"]
+        # Clean up markdown code fences if present
+        if content.startswith("```"):
+            content = content.split("\n", 1)[1]
+            if content.endswith("```"):
+                content = content[:-3]
+        return {"blog_html": content.strip(), "provider": "gemini"}

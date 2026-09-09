@@ -271,7 +271,7 @@ api/generate.py    ──────────►     Serverless Function
 
 ### Step 4: Environment Variables (Zaroori!) ⚠️
 
-**"Environment Variables"** section expand karo aur yeh 3 variables add karo:
+**"Environment Variables"** section expand karo aur yeh 2 variables add karo:
 
 | Key | Value |
 |-----|-------|
@@ -421,6 +421,63 @@ Blog preview frontend pe dikh jata hai
 > **Dono free hain. Dono full stack support karte hain. Dono mein backend alag server pe nahi — serverless function hai.**
 
 > 💡 **Meri recommendation:** Vercel use karo — Python native support hai, thoda fast hai.
+
+---
+
+## 🖥 VPS / Local — Full Stack Deploy (Gemini API)
+
+Agar VPS pe deploy karna hai ya local chalana hai, toh **Gemini API** use karo (Nara Router nahi).
+
+### .env file setup:
+
+```bash
+# VPS/Local ke liye yeh .env mein daalo:
+AI_PROVIDER=gemini
+GEMINI_API_KEY=apni-gemini-key-yahan-daal
+```
+
+### Steps:
+
+```bash
+# 1. VPS pe SSH karo
+ssh root@your-vps-ip
+
+# 2. Clone karo
+git clone https://github.com/NSKWeb/contentmagic.git
+cd contentmagic
+
+# 3. Backend setup
+cd backend
+python3 -m venv venv
+source venv/bin/activate
+pip install -r ../requirements.txt
+
+# 4. .env setup (Gemini key daalo)
+cp ../.env.example .env
+nano .env
+# AI_PROVIDER=gemini
+# GEMINI_API_KEY=apni-gemini-key
+
+# 5. Backend chalao
+python main.py
+# 🟢 http://localhost:8000
+
+# 6. Frontend (naye terminal mein)
+cd ../frontend
+python3 -m http.server 3000
+# 🌐 http://localhost:3000
+```
+
+### Kaunsa Provider Kab Use Karein?
+
+| Deploy Kar Rahe Ho? | Provider | Key |
+|---------------------|----------|-----|
+| ▲ **Vercel** | `nara` (default) | `NARA_ROUTER_API_KEY` |
+| ◆ **Netlify** | `nara` (default) | `NARA_ROUTER_API_KEY` |
+| 🖥 **VPS** | `gemini` | `GEMINI_API_KEY` |
+| 💻 **Local** | `gemini` | `GEMINI_API_KEY` |
+
+> **Matlab:** Serverless (Vercel/Netlify) → Nara Router. Apna server (VPS/Local) → Gemini.
 
 ---
 
