@@ -1,0 +1,11 @@
+{
+  "name": "contentmagic",
+  "version": "1.0.0",
+  "description": "ContentMagic — Any text to beautiful blog post",
+  "private": true,
+  "scripts": {
+    "dev:backend": "cd backend && python main.py",
+    "dev:frontend": "cd frontend && python -m http.server 3000",
+    "dev": "npm run dev:backend & npm run dev:frontend"
+  }
+}

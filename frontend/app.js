@@ -1,6 +1,9 @@
 // ContentMagic — Frontend Logic
 
-const API_URL = "http://localhost:8000/api/generate";
+// Auto-detect API URL: localhost → local backend, deployed → same domain
+const API_URL = window.location.hostname === "localhost"
+    ? "http://localhost:8000/api/generate"
+    : "/api/generate";
 
 // DOM elements
 const inputText = document.getElementById("inputText");
